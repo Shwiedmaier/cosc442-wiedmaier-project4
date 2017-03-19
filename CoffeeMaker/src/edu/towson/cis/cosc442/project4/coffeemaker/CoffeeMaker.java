@@ -88,7 +88,7 @@ public class CoffeeMaker {
         if(r != null) {
 	        for(int i = 0; i < NUM_RECIPES; i++) {
 	            if(r.checkEqual(recipeArray[i])) {
-	                recipeArray[i] = null; 
+	                recipeArray[i] = new Recipe(); 
 	                canDeleteRecipe = true;
 	            }
 	        }
