@@ -26,10 +26,21 @@ public class CoffeeMakerTest extends TestCase {
 	public void testAddRecipe1() {
 		assertTrue(cm.addRecipe(r1));
 	}
+	public void testAddRecipe3() {
+		assertTrue(cm.addRecipe(r1));
+		assertEquals(cm.addRecipe(r1), false);
+	}
 
 	public void testDeleteRecipe1() {
 		cm.addRecipe(r1);
 		assertTrue(cm.deleteRecipe(r1));
+	}
+	
+	public void testDeleteRecipe32(){
+		cm.addRecipe(r1);
+		cm.deleteRecipe(r1);
+		assertEquals(cm.makeCoffee(cm.getRecipeForName("Coffee"), 50), 50);
+		
 	}
 
 	public void testEditRecipe1() {
@@ -48,6 +59,15 @@ public class CoffeeMakerTest extends TestCase {
 		assertEquals(i.getCoffee(), 25);
 	}
 	
+	public void testAddInventory11(){
+		
+		assertEquals(cm.addInventory(-1, -1, -10, -14), false);
+		assertEquals(cm.addInventory(-100, 15, 13, 12), false);
+		assertEquals(cm.addInventory(0, 0, 0, 0), true);
+		
+	}
+	
+	
 	public void testCheckInventory(){
 		assertEquals(i,cm.checkInventory());
 		
@@ -55,8 +75,38 @@ public class CoffeeMakerTest extends TestCase {
 	
 	public void testPurchaseBeverage1(){
 		cm.addRecipe(r1);
+		r1.setAmtChocolate(1);
+		assertEquals(cm.makeCoffee(r1, 50), 0);
+		
+		assertEquals(i.getChocolate(), 14);
+	}
+	
+	public void testPurchaseBeverage11(){
+		r1.setAmtChocolate(1);
+		cm.addRecipe(r1);
+		i.setChocolate(1);
+		i.setCoffee(6);
+		i.setMilk(1);
+		i.setSugar(1);
+		assertEquals(cm.makeCoffee(r1, 50), 0);
+		
+		
+	}
+	public void testPurchaseBeverage12(){
+		r1.setPrice(1);
+		cm.addRecipe(r1);
+		assertEquals(cm.makeCoffee(r1, 50), 49);
+		
+		
+	}
+	
+	public void testPurchaseBeverage21(){
+		cm.addRecipe(r1);
 
 		assertEquals(cm.makeCoffee(r1, 50), 0);
+		assertEquals(i.getCoffee(), 9);
+		assertEquals(i.getMilk(), 14);
+		assertEquals(i.getSugar(), 14);
 	}
 	
 	public void testGetRecipeForName(){
@@ -65,15 +115,27 @@ public class CoffeeMakerTest extends TestCase {
 	}
 	
 	public void testInventory(){
-		i.setChocolate(-1);
-		i.setMilk(-1);
-		i.setCoffee(-1);
-		i.setSugar(-1);
-		assertEquals(i.getMilk(), 0);
-		assertEquals(i.getChocolate(), 0);
-		assertEquals(i.getSugar(), 0);
-		assertEquals(i.getCoffee(), 0);
+		i.setChocolate(1);
+		i.setMilk(1);
+		i.setCoffee(1);
+		i.setSugar(1);
+		assertEquals(i.getMilk(), 1);
+		assertEquals(i.getChocolate(), 1);
+		assertEquals(i.getSugar(), 1);
+		assertEquals(i.getCoffee(), 1);
 	}
+	public void testInventory65(){
+		cm.addRecipe(r1);
+		r1.setAmtChocolate(1);
+		r1.setAmtMilk(1);
+		r1.setAmtCoffee(1);
+		r1.setAmtSugar(1);
+		assertEquals(r1.getAmtMilk(), 1);
+		assertEquals(r1.getAmtChocolate(), 1);
+		assertEquals(r1.getAmtSugar(), 1);
+		assertEquals(r1.getAmtCoffee(), 1);
+	}
+	
 	public void testInventory2(){
 		cm.addRecipe(r1);
 		r1.setAmtChocolate(1);
