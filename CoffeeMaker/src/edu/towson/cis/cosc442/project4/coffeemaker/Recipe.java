@@ -127,7 +127,7 @@ public class Recipe {
      * @param r Recipe
      * @return boolean
      */
-    public boolean equals(Recipe r) {
+    public boolean checkEqual(Recipe r) {
         if(r.getName() == null) {
 	    	return false;
     	}	
